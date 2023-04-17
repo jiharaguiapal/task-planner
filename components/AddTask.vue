@@ -1,11 +1,12 @@
 <template>
-  <div>
+  <div class="add-task">
     <b-input
+      class="add-task__input"
       @keyup.enter="addToTask()"
       v-model="newTask.title"
       placeholder="What's your plan for today?"
     ></b-input>
-    <p>Press enter to add task</p>
+    <p class="add-task__label">Press enter to add task</p>
   </div>
 </template>
 

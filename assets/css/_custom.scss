@@ -1,1 +1,162 @@
 // Write your custom styling here
+
+.landing{
+   justify-content: center; 
+   align-items: center; 
+
+   margin: 20% auto;
+    
+    &__header{
+        text-align: center;
+
+        &__title{
+            font-size: 38px;
+
+        }
+        &__subtitle{
+            font-size: 16px;
+            width: 350px;
+            margin: auto;
+
+        }
+
+    }
+
+    &__action{
+         color: #BDC1CC;
+
+        
+        &__input{
+            height: 55px;
+            border: none;
+            margin-top: 60px;
+            background: #F3F4F7 0% 0% no-repeat padding-box;
+            opacity: 1;
+            font-size: 14px;
+        }
+        &__label{
+            font-size: 12px;
+
+            &--highlight{
+                color: #E83E8C;
+            }
+           
+
+        }
+    }
+
+  
+}
+
+.list{
+    // border: 1px solid red;
+    color: #3A3B45;
+    margin: 55px 10%;
+
+    &__header{
+
+
+        &__title{
+            font-size: 30px;
+            margin: 0;
+
+        }
+        &__nav{
+            a.nav-link{
+            color: #3A3B45;
+            
+             &:hover{
+                background-color: #787E95;
+                color: white;
+              }
+
+              &:active{
+               
+              }
+            }
+      
+          
+        }
+
+     
+    }
+
+    &__search{
+
+        &__input{
+            margin: 20px 0;
+            border-radius: 100px;
+            
+        }
+    }
+
+    &__task{
+        color: #9CA0B1;
+        font-size: 14px;
+        padding:  8px 16px;
+        margin: 8px 0;
+        box-shadow: 0px 3px 6px #00000024;
+        border: 1px solid #E6E6E6;
+        border-radius: 6px;
+
+        &__checkbox{
+            .custom-control-label::before{
+                border-radius:100px;
+                background-color: #BDC1CC;
+                border: none;
+
+            }
+
+            .custom-control-input:checked ~ .custom-control-label::before {
+                color: #fff;
+                background-color: #787E95;
+                border-radius:100px;
+             }
+            &__title{
+                
+            }
+        }
+
+        &__col{
+            max-width: 30px;
+            align-items: end;
+
+                
+            &__important{
+
+                &:hover{
+                    color: #F6C23E;
+                }
+            }
+            &__delete{
+
+
+                &:hover{
+                    color: red;
+                }
+
+            
+            }
+        }
+
+    }
+}
+
+.add{
+    margin: 55px 10%;
+    
+}
+
+.add-task{
+
+
+    &__input{
+        border: none;
+        background: #F3F4F7 0% 0% no-repeat padding-box;
+        opacity: 1;
+        font-size: 14px;
+    }
+    &__label{
+        font-size: 12px;
+    }
+}

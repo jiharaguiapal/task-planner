@@ -1,5 +1,7 @@
 <template>
-  <Landing />
+  <b-container>
+    <Landing />
+  </b-container>
 </template>
 
 <script>

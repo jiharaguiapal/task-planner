@@ -1,18 +1,25 @@
 <template>
-  <b-container>
-    <div>
-      <h1>Welcome to Task Planner</h1>
-      <p>Get things done with your day, a list that refreshes everyday.</p>
+  <div class="landing">
+    <div class="landing__header">
+      <h1 class="landing__header__title">Welcome to Task Planner</h1>
+      <p class="landing__header__subtitle">
+        Get things done with your day, a list that refreshes everyday.
+      </p>
     </div>
-    <div>
+    <div class="landing__action">
       <b-input
+        class="landing__action__input"
         @keyup.enter="addToTask()"
         v-model="newTask.title"
         placeholder="What's your plan for today?"
-      ></b-input>
-      <p>Press enter to add task</p>
+      >
+      </b-input>
+      <p class="landing__action__label">
+        Press <span class="landing__action__label--highlight"> enter </span> to
+        add task
+      </p>
     </div>
-  </b-container>
+  </div>
 </template>
 
 <script>

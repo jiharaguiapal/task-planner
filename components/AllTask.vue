@@ -1,23 +1,24 @@
 <template>
-  <b-container>
-    <div>
-      <b-row>
+  <div>
+    <div class="list">
+      <b-row class="list__header">
         <b-col>
-          <h1>Task Planner</h1>
+          <h1 class="list__header__title">Task Planner</h1>
         </b-col>
         <b-col>
-          <b-button variant="muted" @click="filterAll()">All</b-button>
-          <b-button variant="muted" @click="filterImportant()">
-            {{ countImportant }} Important
-          </b-button>
-          <b-button variant="muted" @click="filterDone()">
-            {{ countDone }} Done</b-button
-          >
+          <b-nav class="list__header__nav" small align="end" pills>
+            <b-nav-item @click="filterAll()">All</b-nav-item>
+            <b-nav-item @click="filterImportant()">
+              {{ countImportant }} Important</b-nav-item
+            >
+            <b-nav-item @click="filterDone()"> {{ countDone }} Done</b-nav-item>
+          </b-nav>
         </b-col>
       </b-row>
-      <b-row>
+      <b-row class="list__search">
         <b-col>
           <b-input
+            class="list__search__input"
             @change="searchFilter"
             placeholder="Search"
             v-model="search"
@@ -25,27 +26,39 @@
           <!-- @keyup.enter="searchFilter()" -->
         </b-col>
       </b-row>
-      <b-card v-for="task in filteredTasks" :key="task.id">
-        <b-row>
+      <b-card
+        no-body
+        class="list__task"
+        v-for="task in filteredTasks"
+        :key="task.id"
+      >
+        <b-row no-gutters align-v="center">
           <b-col>
             <b-form-checkbox
+              class="list__task__checkbox"
               @change="doneTask(task)"
               :checked="task.is_done == true"
             >
+              <span
+                class="list__task__checkbox_title"
+                :class="task.is_done ? 'done-task' : ''"
+              >
+                {{ task.title }}
+              </span>
             </b-form-checkbox>
           </b-col>
-          <b-col>
-            <p :class="task.is_done ? 'done-task' : ''">{{ task.title }}</p>
-          </b-col>
-          <b-col>
+
+          <b-col class="list__task__col">
             <font-awesome-icon
+              class="list__task__col__important"
               @click="markImportant(task)"
               :class="task.is_important ? 'temp-yellow' : ''"
               :icon="['far', 'star']"
             />
           </b-col>
-          <b-col>
+          <b-col class="list__task__col">
             <font-awesome-icon
+              class="list__task__col__delete"
               @click="deleteTask(task)"
               :icon="['far', 'trash-can']"
             />
@@ -53,10 +66,10 @@
         </b-row>
       </b-card>
     </div>
-    <div>
+    <div class="add">
       <AddTask />
     </div>
-  </b-container>
+  </div>
 </template>
 
 <script>
@@ -74,6 +87,7 @@ export default {
       filteredTask: [],
       filterOn: "all",
       search: "",
+      activeBtn: "muted",
     };
   },
   beforeCreate() {
@@ -84,14 +98,7 @@ export default {
     ...mapGetters({
       allTasks: "getTasks",
     }),
-    // searchFilter() {
-    //   let result;
-    //   result = this.filteredTask.find((task) =>
-    //     task.title.includes(this.search)
-    //   );
-    //   this.filteredTask = [];
-    //   this.filteredTask.push(result);
-    // },
+
     countDone() {
       let doneTasks = [];
       this.allTasks.filter((task) => {
@@ -177,33 +184,15 @@ export default {
         .catch((err) => err);
     },
     filterAll() {
-      //   this.filteredTask = this.allTasks;
       this.filterOn = "all";
     },
     filterDone() {
-      //   this.filteredTask = [];
-      //   this.allTasks.filter((task) => {
-      //     if (task.is_done == true) {
-      //       this.filteredTask.push(task);
-      //     }
-      //   });
       this.filterOn = "done";
     },
     filterImportant() {
-      //   this.filteredTask = [];
-
-      //   this.allTasks.filter((task) => {
-      //     if (task.is_important == true) {
-      //       this.filteredTask.push(task);
-      //     }
-      //   });
       this.filterOn = "important";
+      this.ac;
     },
-    // searchFilter() {
-    //   let result;
-    //   result = this.allTasks.find((task) => task.title.includes(this.search));
-    //   console.log("result", result);
-    // },
   },
 };
 </script>
@@ -213,6 +202,6 @@ export default {
   text-decoration: line-through;
 }
 .temp-yellow {
-  color: yellow;
+  color: #f6c23e;
 }
 </style>
