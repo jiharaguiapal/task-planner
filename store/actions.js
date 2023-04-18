@@ -9,7 +9,20 @@ export default {
     })
       .then((res) => {
         commit("SET_ALLTASKS", res.data);
-        console.log("res", res.data);
+        return res.data;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
+  async fetchAllUsers({ commit }) {
+    await axios({
+      method: "GET",
+      url: `${this.$axios.defaults.baseURL}/users`,
+      headers: {},
+    })
+      .then((res) => {
+        commit("SET_ALLUSERS", res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -41,7 +54,6 @@ export default {
       },
     })
       .then((res) => {
-        console.log("updateTask", res.data);
         commit("UPDATE_TASK", res.data);
       })
       .catch((err) => {
@@ -55,7 +67,6 @@ export default {
       headers: {},
     })
       .then((res) => {
-        console.log("delete", taskId);
         commit("DELETE_TASK", res.data);
       })
       .catch((err) => {

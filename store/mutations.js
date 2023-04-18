@@ -2,6 +2,9 @@ export default {
   SET_ALLTASKS(state, tasks) {
     state.allTasks = tasks;
   },
+  SET_ALLUSERS(state, users) {
+    state.allUsers = users;
+  },
   ADD_TASK(state, task) {
     state.allTasks.push(task);
   },

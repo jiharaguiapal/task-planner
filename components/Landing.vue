@@ -41,7 +41,6 @@ export default {
           newTask: this.newTask,
         })
         .then((res) => {
-          console.log("res add", res);
           this.$router.push("/allTask");
         })
         .catch((err) => err);

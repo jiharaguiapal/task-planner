@@ -19,17 +19,15 @@
         <b-col>
           <b-input
             class="list__search__input"
-            @change="searchFilter"
             placeholder="Search"
             v-model="search"
           ></b-input>
-          <!-- @keyup.enter="searchFilter()" -->
         </b-col>
       </b-row>
       <b-card
         no-body
         class="list__task"
-        v-for="task in filteredTasks"
+        v-for="task in filteredTask"
         :key="task.id"
       >
         <b-row no-gutters align-v="center">
@@ -48,6 +46,31 @@
             </b-form-checkbox>
           </b-col>
 
+          <b-col class="list__task__col">
+            <b-dropdown
+              variant="muted"
+              class="list__task__col__dropdown"
+              size="sm"
+            >
+              <b-dropdown-group>
+                <b-input
+                  class="list__task__col__dropdown__input"
+                  size="sm"
+                  placeholder="Search Team Member"
+                ></b-input>
+              </b-dropdown-group>
+              <b-dropdown-item
+                class="list__task__col__dropdown__item"
+                v-for="user in allUsers"
+                :key="user.id"
+              >
+                <b-avatar size="sm" :src="user.avatar"></b-avatar>
+                <span>
+                  {{ user.name }}
+                </span>
+              </b-dropdown-item>
+            </b-dropdown>
+          </b-col>
           <b-col class="list__task__col">
             <font-awesome-icon
               class="list__task__col__important"
@@ -90,13 +113,17 @@ export default {
       activeBtn: "muted",
     };
   },
-  beforeCreate() {
-    this.$store.dispatch("fetchAllTasks");
+  watch: {
+    search() {
+      this.filteredTask = this.allTasks.filter((task) =>
+        task.title.toLowerCase().includes(this.search.toLowerCase())
+      );
+    },
   },
-  created() {},
   computed: {
     ...mapGetters({
       allTasks: "getTasks",
+      allUsers: "getUsers",
     }),
 
     countDone() {
@@ -118,11 +145,27 @@ export default {
       return importantTasks.length;
     },
 
-    filteredTasks() {
+    searchFilter() {
+      this.filteredTask = this.allTasks.filter((task) =>
+        task.title.toLowerCase().includes(this.search.toLowerCase())
+      );
+    },
+  },
+  async beforeCreate() {
+    await this.$store.dispatch("fetchAllTasks");
+    await this.$store.dispatch("fetchAllUsers");
+  },
+  created() {
+    this.filteredTasks();
+  },
+
+  methods: {
+    async filteredTasks() {
+      await this.$store.dispatch("fetchAllTasks");
       this.filteredTask = [];
       if (this.filterOn == "all") {
         this.filteredTask = this.allTasks;
-        return this.filteredTask;
+        // return this.filteredTask;
       }
       if (this.filterOn == "done") {
         this.allTasks.filter((task) => {
@@ -130,7 +173,7 @@ export default {
             this.filteredTask.push(task);
           }
         });
-        return this.filteredTask;
+        // return this.filteredTask;
       }
       if (this.filterOn == "important") {
         this.allTasks.filter((task) => {
@@ -138,11 +181,9 @@ export default {
             this.filteredTask.push(task);
           }
         });
-        return this.filteredTask;
+        // return this.filteredTask;
       }
     },
-  },
-  methods: {
     doneTask(task) {
       //   this.taskData.is_done = !task.is_done;
       this.taskData = {
@@ -185,13 +226,15 @@ export default {
     },
     filterAll() {
       this.filterOn = "all";
+      this.filteredTasks();
     },
     filterDone() {
       this.filterOn = "done";
+      this.filteredTasks();
     },
     filterImportant() {
       this.filterOn = "important";
-      this.ac;
+      this.filteredTasks();
     },
   },
 };
